@@ -1,0 +1,5 @@
+{
+  "name": "Senhores dos Mares",
+  "description": "A two-player Battleship game designed to be played over a local WiFi network. It features user discovery, game invitations, persistent stats, and game state saving. The application simulates local network interactions using browser storage for a self-contained experience.",
+  "requestFramePermissions": []
+}
