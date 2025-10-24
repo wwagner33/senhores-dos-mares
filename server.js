@@ -4,6 +4,7 @@ import { createServer } from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import os from 'os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -33,6 +34,49 @@ const SHIPS_BY_COUNT = {
   5: ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'],
   7: ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer', 'cruiser', 'submarine']
 };
+
+// Função para obter IPs da rede local
+function getLocalIPs() {
+  const allInterfaces = os.networkInterfaces();
+  const localIPs = [];
+  
+  Object.keys(allInterfaces).forEach(interfaceName => {
+    allInterfaces[interfaceName].forEach(oneInterface => {
+      // IPv4 e não é loopback
+      if (oneInterface.family === 'IPv4' && !oneInterface.internal) {
+        localIPs.push({
+          oneInterface: interfaceName,
+          address: oneInterface.address,
+          family: oneInterface.family
+        });
+      }
+    });
+  });
+  
+  return localIPs;
+}
+
+// Função para obter o IP do cliente a partir do WebSocket
+function getClientIP(ws) {
+  // Tenta obter o IP real do cliente
+  const socket = ws._socket;
+  const headers = ws.upgradeReq?.headers;
+  
+  // Verifica se há header X-Forwarded-For (caso esteja atrás de proxy)
+  const forwardedFor = headers?.['x-forwarded-for'];
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim();
+  }
+  
+  // Verifica se há header X-Real-IP
+  const realIP = headers?.['x-real-ip'];
+  if (realIP) {
+    return realIP;
+  }
+  
+  // Usa o endereço remoto do socket como fallback
+  return socket.remoteAddress;
+}
 
 // Utilitários
 function createEmptyBoard() {
@@ -71,7 +115,7 @@ function placeShipOnBoard(board, x, y, shipSize, orientation) {
 }
 
 function generateRandomShipPlacement(shipTypes) {
-  const board = createEmptyBoard();
+  let board = createEmptyBoard();
   const ships = [];
   
   shipTypes.forEach((shipType, index) => {
@@ -116,8 +160,11 @@ function generateRandomShipPlacement(shipTypes) {
 }
 
 // WebSocket handlers
-wss.on('connection', (ws) => {
+wss.on('connection', (ws, req) => {
   console.log('Nova conexão WebSocket');
+  
+  // Armazena a requisição para acesso posterior
+  ws.upgradeReq = req;
   
   ws.on('message', (data) => {
     try {
@@ -135,6 +182,7 @@ wss.on('connection', (ws) => {
       const user = users.get(userId);
       if (user) {
         user.lastSeen = new Date();
+        user.isOnline = false;
         broadcastUserList();
       }
     }
@@ -171,22 +219,31 @@ function handleMessage(ws, message) {
 }
 
 function handleRegister(ws, message) {
-  const { userId, userName } = message;
+  const { userName } = message;
+  const userId = uuidv4(); // Gera UUID único para o usuário
+  const userIP = getClientIP(ws);
   
   const user = {
     id: userId,
     name: userName,
-    ip: ws._socket.remoteAddress,
-    lastSeen: new Date()
+    ip: userIP,
+    lastSeen: new Date(),
+    isOnline: true
   };
   
   users.set(userId, user);
   userConnections.set(userId, ws);
   
-  // Enviar confirmação
+  console.log(`Usuário registrado: ${userName} (${userId}) - IP: ${userIP}`);
+  
+  // Enviar confirmação com UUID
   ws.send(JSON.stringify({
     type: 'registered',
-    user
+    user: {
+      id: userId,
+      name: userName,
+      ip: userIP
+    }
   }));
   
   broadcastUserList();
@@ -194,12 +251,17 @@ function handleRegister(ws, message) {
 
 function handleGetOnlineUsers(ws) {
   const onlineUsers = Array.from(users.values()).filter(user => 
-    userConnections.has(user.id)
+    userConnections.has(user.id) && user.isOnline
   );
   
   ws.send(JSON.stringify({
     type: 'online_users',
-    users: onlineUsers
+    users: onlineUsers.map(user => ({
+      id: user.id,
+      name: user.name,
+      ip: user.ip,
+      lastSeen: user.lastSeen
+    }))
   }));
 }
 
@@ -375,12 +437,17 @@ function broadcastToGame(gameId, message) {
 
 function broadcastUserList() {
   const onlineUsers = Array.from(users.values()).filter(user => 
-    userConnections.has(user.id)
+    userConnections.has(user.id) && user.isOnline
   );
   
   const message = JSON.stringify({
     type: 'online_users',
-    users: onlineUsers
+    users: onlineUsers.map(user => ({
+      id: user.id,
+      name: user.name,
+      ip: user.ip,
+      lastSeen: user.lastSeen
+    }))
   });
   
   userConnections.forEach(ws => {
@@ -395,10 +462,27 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'public', 'index.html'));
 });
 
+// Rota para informações do servidor
+app.get('/server-info', (req, res) => {
+  const localIPs = getLocalIPs();
+  res.json({
+    port: PORT,
+    localIPs,
+    serverTime: new Date().toISOString()
+  });
+});
+
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, '0.0.0.0',() => {
-  console.log(`Servidor Batalha Naval rodando na porta ${PORT}`);
-  console.log(`Acesse: http://0.0.0.0:${PORT}`);
-
-
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`\n=== SERVIDOR BATALHA NAVAL ===`);
+  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`\nEndereços disponíveis na rede local:`);
+  
+  const localIPs = getLocalIPs();
+  localIPs.forEach(ipInfo => {
+    console.log(`  → http://${ipInfo.address}:${PORT} (${ipInfo.interface})`);
+  });
+  
+  console.log(`\nAcesse qualquer um dos endereços acima para jogar`);
+  console.log(`=============================================\n`);
 });
