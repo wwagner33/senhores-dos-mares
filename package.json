@@ -9,12 +9,20 @@
     "dev": "nodemon server.js",
     "test": "echo \"Abra http://localhost:3000 em duas abas diferentes\" && exit 0"
   },
-  "keywords": ["battleship", "game", "websockets", "multiplayer"],
+  "keywords": [
+    "battleship",
+    "game",
+    "websockets",
+    "multiplayer"
+  ],
   "author": "Seu Nome",
   "license": "GPL-3.0",
   "dependencies": {
     "express": "^4.18.2",
-    "ws": "^8.14.2",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
