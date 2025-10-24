@@ -1,0 +1,45 @@
+<svg width="200" height="40" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="carrierGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a5568" />
+      <stop offset="50%" stop-color="#2d3748" />
+      <stop offset="100%" stop-color="#4a5568" />
+    </linearGradient>
+    <linearGradient id="deckGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#718096" />
+      <stop offset="100%" stop-color="#a0aec0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Casco principal -->
+  <rect x="10" y="15" width="180" height="20" rx="3" fill="url(#carrierGradient)" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Convés de voo -->
+  <rect x="20" y="5" width="160" height="10" rx="2" fill="url(#deckGradient)" stroke="#4a5568" stroke-width="1"/>
+  
+  <!-- Torre de comando -->
+  <rect x="140" y="8" width="25" height="12" rx="2" fill="#2d3748" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Antenas -->
+  <line x1="150" y1="5" x2="150" y2="0" stroke="#e2e8f0" stroke-width="2"/>
+  <line x1="155" y1="5" x2="155" y2="0" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Janelas da torre -->
+  <circle cx="145" cy="12" r="1.5" fill="#63b3ed"/>
+  <circle cx="150" cy="12" r="1.5" fill="#63b3ed"/>
+  <circle cx="155" cy="12" r="1.5" fill="#63b3ed"/>
+  <circle cx="160" cy="12" r="1.5" fill="#63b3ed"/>
+  
+  <!-- Detalhes do casco -->
+  <line x1="30" y1="25" x2="170" y2="25" stroke="#a0aec0" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="25" y1="20" x2="175" y2="20" stroke="#718096" stroke-width="0.5"/>
+  
+  <!-- Escotilhas -->
+  <rect x="40" y="17" width="6" height="3" rx="1" fill="#4a5568"/>
+  <rect x="60" y="17" width="6" height="3" rx="1" fill="#4a5568"/>
+  <rect x="80" y="17" width="6" height="3" rx="1" fill="#4a5568"/>
+  <rect x="100" y="17" width="6" height="3" rx="1" fill="#4a5568"/>
+  
+  <!-- Proa -->
+  <path d="M10 15 L0 25 L10 35 Z" fill="#2d3748" stroke="#1a202c" stroke-width="1"/>
+</svg>

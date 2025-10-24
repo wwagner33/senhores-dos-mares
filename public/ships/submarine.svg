@@ -1,0 +1,51 @@
+<svg width="120" height="40" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="submarineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a5568" />
+      <stop offset="50%" stop-color="#2d3748" />
+      <stop offset="100%" stop-color="#4a5568" />
+    </linearGradient>
+    <radialGradient id="portholeGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a0aec0" />
+      <stop offset="100%" stop-color="#4a5568" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Casco (formato de submarino) -->
+  <ellipse cx="60" cy="25" rx="50" ry="12" fill="url(#submarineGradient)" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Torre de comando -->
+  <rect x="50" y="10" width="20" height="15" rx="3" fill="#2d3748" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Janelas da torre -->
+  <circle cx="55" cy="17" r="2" fill="url(#portholeGradient)"/>
+  <circle cx="60" cy="17" r="2" fill="url(#portholeGradient)"/>
+  <circle cx="65" cy="17" r="2" fill="url(#portholeGradient)"/>
+  
+  <!-- Escotilha -->
+  <rect x="57" y="10" width="6" height="2" rx="1" fill="#4a5568"/>
+  
+  <!-- Antenas -->
+  <line x1="60" y1="10" x2="60" y2="5" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="65" y1="12" x2="70" y2="8" stroke="#e2e8f0" stroke-width="1"/>
+  
+  <!-- Leme -->
+  <path d="M110 18 L115 25 L110 32 Z" fill="#2d3748" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Hélices -->
+  <circle cx="112" cy="25" r="3" fill="#1a202c"/>
+  <line x1="112" y1="22" x2="112" y2="28" stroke="#4a5568" stroke-width="2"/>
+  <line x1="109" y1="25" x2="115" y2="25" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- Detalhes do casco -->
+  <line x1="20" y1="25" x2="100" y2="25" stroke="#a0aec0" stroke-width="0.8"/>
+  
+  <!-- Portos de observação -->
+  <circle cx="30" cy="25" r="1.5" fill="url(#portholeGradient)"/>
+  <circle cx="45" cy="25" r="1.5" fill="url(#portholeGradient)"/>
+  <circle cx="75" cy="25" r="1.5" fill="url(#portholeGradient)"/>
+  <circle cx="90" cy="25" r="1.5" fill="url(#portholeGradient)"/>
+  
+  <!-- Proa -->
+  <ellipse cx="15" cy="25" rx="5" ry="8" fill="#2d3748"/>
+</svg>

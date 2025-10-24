@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalha Naval Multiplayer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Tela de Login -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <h1>🚢 Batalha Naval</h1>
+                <p>Conecte-se para jogar com outros jogadores na rede local</p>
+                <div class="input-group">
+                    <input type="text" id="player-name" placeholder="Seu nome no jogo" maxlength="20">
+                    <button id="connect-btn">Conectar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lobby -->
+        <div id="lobby-screen" class="screen">
+            <header>
+                <h1>🚢 Batalha Naval</h1>
+                <div class="user-info">
+                    <span id="current-user-name"></span>
+                    <button id="logout-btn">Sair</button>
+                </div>
+            </header>
+
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="games">Partidas</button>
+                <button class="tab-btn" data-tab="players">Jogadores</button>
+                <button class="tab-btn" data-tab="stats">Estatísticas</button>
+                <button class="tab-btn" data-tab="help">Ajuda</button>
+            </nav>
+
+            <main>
+                <!-- Aba Partidas -->
+                <div id="games-tab" class="tab-content active">
+                    <h2>Suas Partidas</h2>
+                    <div id="games-list" class="games-list"></div>
+                </div>
+
+                <!-- Aba Jogadores -->
+                <div id="players-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Jogadores Online</h2>
+                        <button id="refresh-players">Atualizar</button>
+                    </div>
+                    <div id="players-list" class="players-list"></div>
+                </div>
+
+                <!-- Aba Estatísticas -->
+                <div id="stats-tab" class="tab-content">
+                    <h2>Estatísticas</h2>
+                    <div id="stats-content"></div>
+                </div>
+
+                <!-- Aba Ajuda -->
+                <div id="help-tab" class="tab-content">
+                    <h2>Como Jogar</h2>
+                    <div class="help-content">
+                        <h3>🎯 Objetivo</h3>
+                        <p>Afunde todos os navios do oponente antes que ele afunda os seus.</p>
+                        
+                        <h3>⚓ Navios</h3>
+                        <div class="ships-info">
+                            <div class="ship-info">
+                                <img src="ships/carrier.svg" alt="Porta-Aviões">
+                                <span>Porta-Aviões (5 casas)</span>
+                            </div>
+                            <div class="ship-info">
+                                <img src="ships/battleship.svg" alt="Navio de Guerra">
+                                <span>Navio de Guerra (4 casas)</span>
+                            </div>
+                            <div class="ship-info">
+                                <img src="ships/cruiser.svg" alt="Cruzador">
+                                <span>Cruzador (3 casas)</span>
+                            </div>
+                            <div class="ship-info">
+                                <img src="ships/submarine.svg" alt="Submarino">
+                                <span>Submarino (3 casas)</span>
+                            </div>
+                            <div class="ship-info">
+                                <img src="ships/destroyer.svg" alt="Destroyer">
+                                <span>Destroyer (2 casas)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modal Novo Jogo -->
+        <div id="new-game-modal" class="modal">
+            <div class="modal-content">
+                <h3>Novo Jogo vs. <span id="opponent-name"></span></h3>
+                <div class="game-options">
+                    <label>Número de Navios:</label>
+                    <select id="ship-count">
+                        <option value="3">3 Navios</option>
+                        <option value="5" selected>5 Navios (Padrão)</option>
+                        <option value="7">7 Navios</option>
+                    </select>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="timed-game">
+                        <span>Jogo Cronometrado</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button id="cancel-game">Cancelar</button>
+                    <button id="start-game">Iniciar Jogo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Convite -->
+        <div id="invitation-modal" class="modal">
+            <div class="modal-content">
+                <h3>Convite Recebido</h3>
+                <p><span id="inviter-name"></span> te convidou para uma partida!</p>
+                <div class="modal-actions">
+                    <button id="reject-invitation">Recusar</button>
+                    <button id="accept-invitation">Aceitar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela do Jogo -->
+        <div id="game-screen" class="screen">
+            <header class="game-header">
+                <h1>🚢 Batalha Naval</h1>
+                <div class="game-info">
+                    <span id="opponent-game-name"></span>
+                    <span id="game-status"></span>
+                    <button id="exit-game">Sair do Jogo</button>
+                </div>
+            </header>
+
+            <div id="game-container">
+                <!-- Fase de Configuração -->
+                <div id="setup-phase" class="game-phase">
+                    <h2>Posicione seus Navios</h2>
+                    <div class="setup-container">
+                        <div class="board-container">
+                            <div class="board" id="setup-board"></div>
+                        </div>
+                        <div class="setup-controls">
+                            <h3>Seus Navios</h3>
+                            <div id="ships-to-place" class="ships-to-place"></div>
+                            <div class="controls">
+                                <button id="rotate-ship">Girar Navio (Horizontal)</button>
+                                <button id="auto-place">Posicionar Automaticamente</button>
+                                <button id="confirm-placement" disabled>Confirmar Posicionamento</button>
+                            </div>
+                            <div class="timer" id="setup-timer">Tempo: 10:00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fase de Batalha -->
+                <div id="battle-phase" class="game-phase hidden">
+                    <div class="battle-header">
+                        <h2 id="turn-indicator"></h2>
+                    </div>
+                    <div class="battle-container">
+                        <div class="player-board">
+                            <h3>Seu Tabuleiro</h3>
+                            <div class="board" id="player-board"></div>
+                        </div>
+                        <div class="enemy-board">
+                            <h3>Águas Inimigas</h3>
+                            <div class="board" id="enemy-board"></div>
+                        </div>
+                    </div>
+                    <div class="fleet-status">
+                        <div class="fleet">
+                            <h4>Sua Frota</h4>
+                            <div id="player-fleet"></div>
+                        </div>
+                        <div class="fleet">
+                            <h4>Frota Inimiga</h4>
+                            <div id="enemy-fleet"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fim de Jogo -->
+                <div id="game-over-phase" class="game-phase hidden">
+                    <div class="game-over">
+                        <h2 id="game-result"></h2>
+                        <button id="back-to-lobby">Voltar ao Lobby</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

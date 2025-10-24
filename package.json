@@ -1,21 +1,20 @@
 {
   "name": "senhores-dos-mares",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Batalha Naval Multiplayer com WebSockets",
   "type": "module",
+  "main": "server.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Abra http://localhost:3000 em duas abas diferentes\" && exit 0"
   },
+  "keywords": ["battleship", "game", "websockets", "multiplayer"],
+  "author": "Seu Nome",
+  "license": "GPL-3.0",
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "uuid": "^9.0.1"
   }
 }

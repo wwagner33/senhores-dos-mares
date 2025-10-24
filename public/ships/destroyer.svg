@@ -1,0 +1,48 @@
+<svg width="80" height="40" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="destroyerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a5568" />
+      <stop offset="50%" stop-color="#2d3748" />
+      <stop offset="100%" stop-color="#4a5568" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Casco principal -->
+  <rect x="8" y="22" width="64" height="12" rx="2" fill="url(#destroyerGradient)" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Superestrutura -->
+  <rect x="20" y="15" width="40" height="7" rx="1" fill="#2d3748" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Torre de canhão dianteira -->
+  <rect x="25" y="12" width="8" height="10" rx="1" fill="#4a5568" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Torre de canhão traseira -->
+  <rect x="47" y="12" width="8" height="10" rx="1" fill="#4a5568" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Canhões -->
+  <rect x="27" y="8" width="2" height="12" rx="1" fill="#718096"/>
+  <rect x="49" y="8" width="2" height="12" rx="1" fill="#718096"/>
+  
+  <!-- Lança-torpedos -->
+  <rect x="35" y="16" width="12" height="3" fill="#718096"/>
+  
+  <!-- Antena -->
+  <line x1="40" y1="15" x2="40" y2="10" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="40" cy="8" r="1.5" fill="#63b3ed"/>
+  
+  <!-- Detalhes do casco -->
+  <line x1="15" y1="25" x2="65" y2="25" stroke="#a0aec0" stroke-width="0.8"/>
+  <line x1="15" y1="28" x2="65" y2="28" stroke="#a0aec0" stroke-width="0.8"/>
+  
+  <!-- Janelas -->
+  <circle cx="30" cy="18" r="0.8" fill="#63b3ed"/>
+  <circle cx="33" cy="18" r="0.8" fill="#63b3ed"/>
+  <circle cx="52" cy="18" r="0.8" fill="#63b3ed"/>
+  <circle cx="55" cy="18" r="0.8" fill="#63b3ed"/>
+  
+  <!-- Proa -->
+  <path d="M8 22 L0 28 L8 34 Z" fill="#2d3748" stroke="#1a202c" stroke-width="1"/>
+  
+  <!-- Popa -->
+  <rect x="72" y="22" width="2" height="12" fill="#2d3748"/>
+</svg>

@@ -1,0 +1,423 @@
+/* Reset e Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+/* Telas */
+.screen {
+    display: none;
+    min-height: 100vh;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Tela de Login */
+#login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-container h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #00ffff, #0080ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+#player-name {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+}
+
+#connect-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #00ff88, #00ccff);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#connect-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Lobby */
+#lobby-screen {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #00ffff, #0080ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Listas */
+.games-list, .players-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.game-item, .player-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-info, .player-info {
+    flex: 1;
+}
+
+.game-actions, .player-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #00ccff;
+    color: white;
+}
+
+.btn-success {
+    background: #00ff88;
+    color: white;
+}
+
+.btn-danger {
+    background: #ff4444;
+    color: white;
+}
+
+/* Tabuleiro */
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 2px;
+    background: #1e40af;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.cell {
+    aspect-ratio: 1;
+    background: #3b82f6;
+    border: 1px solid #1e3a8a;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell:hover {
+    background: #60a5fa;
+}
+
+.cell.ship {
+    background: #64748b;
+}
+
+.cell.hit {
+    background: #ef4444;
+}
+
+.cell.hit::after {
+    content: '💥';
+    font-size: 0.8em;
+}
+
+.cell.miss {
+    background: #94a3b8;
+}
+
+.cell.miss::after {
+    content: '•';
+    color: #cbd5e1;
+    font-size: 1.2em;
+}
+
+.cell.sunk {
+    background: #7f1d1d;
+}
+
+.cell.sunk::after {
+    content: '💀';
+}
+
+/* Modais */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #1e293b;
+    padding: 2rem;
+    border-radius: 15px;
+    min-width: 400px;
+    border: 1px solid #334155;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+/* Jogo */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.setup-container, .battle-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+}
+
+.ships-to-place {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.ship-to-place {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.ship-to-place img {
+    width: 40px;
+    height: auto;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fleet-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.fleet {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+/* Utilitários */
+.hidden {
+    display: none !important;
+}
+
+.timer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 1rem;
+    color: #00ff88;
+}
+
+
+/* Estilos para os SVGs dos navios */
+.ship-to-place img {
+    width: 40px;
+    height: auto;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
+    transition: all 0.3s ease;
+}
+
+.ship-to-place:hover img {
+    transform: scale(1.1);
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.7));
+}
+
+.ship-to-place.placed img {
+    opacity: 0.6;
+    filter: grayscale(0.5);
+}
+
+.ship-to-place.selected img {
+    filter: drop-shadow(0 0 8px #00ff88);
+    transform: scale(1.05);
+}
+
+.ship-status img {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.ship-status.sunk img {
+    filter: grayscale(1) brightness(0.5);
+    opacity: 0.7;
+}
+
+/* Animações para feedback visual */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.ship-to-place.selected {
+    animation: pulse 2s infinite;
+}
+
+/* Cores para estados do jogo */
+.victory {
+    color: #00ff88;
+    text-shadow: 0 0 10px #00ff88;
+}
+
+.defeat {
+    color: #ff4444;
+    text-shadow: 0 0 10px #ff4444;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .setup-container, .battle-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .fleet-status {
+        grid-template-columns: 1fr;
+    }
+    
+    .login-container {
+        margin: 1rem;
+        padding: 2rem;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+}
