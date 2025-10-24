@@ -396,7 +396,9 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, '0.0.0.0',() => {
   console.log(`Servidor Batalha Naval rodando na porta ${PORT}`);
-  console.log(`Acesse: http://localhost:${PORT}`);
+  console.log(`Acesse: http://0.0.0.0:${PORT}`);
+
+
 });
